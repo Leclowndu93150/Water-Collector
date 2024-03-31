@@ -89,9 +89,6 @@ public class WatercondenserBlockEntity extends BlockEntity {
             return super.getCapability(cap, side);
         }
     }
-    public int getFluidAmount() {
-        return this.fluidTankHandler.getFluidAmount();
-    }
     public FluidStack getFluidStack() {
 
         if (!fluidTankHandler.isEmpty()) {
@@ -99,10 +96,6 @@ public class WatercondenserBlockEntity extends BlockEntity {
         }
 
         return new FluidStack(fluidOutput, 1);
-    }
-
-    public float getFluidProportion() {
-        return (float) fluidTankHandler.getFluidAmount() / 1000;
     }
 
     @Override
@@ -121,17 +114,17 @@ public class WatercondenserBlockEntity extends BlockEntity {
 
     @Override
     protected void saveAdditional(CompoundTag nbt) {
-        super.saveAdditional(nbt);
         fluidTankHandler.writeToNBT(nbt);
-        nbt.putInt("fluid", fluidTankHandler.getCapacity());
-        updateTag = nbt;
+        //nbt.putInt("fluid", fluidTankHandler.getCapacity());
+        //updateTag = nbt;
+        super.saveAdditional(nbt);
     }
 
     @Override
     public void load(CompoundTag nbt) {
         super.load(nbt);
         fluidTankHandler.readFromNBT(nbt);
-        fluidTankHandler.setCapacity(nbt.getInt("fluid"));
+        //fluidTankHandler.setCapacity(nbt.getInt("fluid"));
 
         if (!fluidTankHandler.getFluid().getFluid().isSame(fluidOutput)) {
             // fluid in config differs from saved NBT, override it
@@ -172,21 +165,15 @@ public class WatercondenserBlockEntity extends BlockEntity {
             pBlockEntity.fluidTankHandler.fill( new FluidStack(fluidOutput, amount), FluidAction.EXECUTE);
         }
     }
-
-
-    public IFluidHandler getTank() {
-       return this.fluidTankHandler;
-    }
     public IFluidHandler getFluidHandler() {
         return this.fluidTankHandler;
     }
 
-
-    @Override
+    /*@Override
     public CompoundTag getUpdateTag() {
         this.saveAdditional(updateTag);
         return updateTag;
-    }
+    }*/
     @Nullable
     @Override
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
@@ -200,7 +187,7 @@ public class WatercondenserBlockEntity extends BlockEntity {
 
 
 
-    public void clientSync() {
+    /*public void clientSync() {
         if (Objects.requireNonNull(this.getLevel()).isClientSide) {
             return;
         }
@@ -212,7 +199,7 @@ public class WatercondenserBlockEntity extends BlockEntity {
                 e.connection.send(updatePacket);
             }
         });
-    }
+    }*/
 
 
     public void setFluid(FluidStack fluidStack) {
