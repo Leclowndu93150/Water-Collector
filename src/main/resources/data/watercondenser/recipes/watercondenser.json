@@ -16,10 +16,10 @@
       "item": "minecraft:stick"
     },
     "A": {
-      "tag": "forge:stone"
+      "tag": "minecraft:leaves"
     }
   },
   "result": {
-    "item": "createsifter:sifter"
+    "item": "watercondenser:watercondenser"
   }
 }
