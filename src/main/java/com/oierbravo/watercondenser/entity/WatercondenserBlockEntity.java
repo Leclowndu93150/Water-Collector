@@ -169,11 +169,6 @@ public class WatercondenserBlockEntity extends BlockEntity {
         return this.fluidTankHandler;
     }
 
-    /*@Override
-    public CompoundTag getUpdateTag() {
-        this.saveAdditional(updateTag);
-        return updateTag;
-    }*/
     @Nullable
     @Override
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
@@ -185,24 +180,16 @@ public class WatercondenserBlockEntity extends BlockEntity {
         this.load(tag);
     }
 
-
-
-    /*public void clientSync() {
-        if (Objects.requireNonNull(this.getLevel()).isClientSide) {
-            return;
-        }
-        ServerLevel world = (ServerLevel) this.getLevel();
-        Stream<ServerPlayer> entities = world.getChunkSource().chunkMap.getPlayers(new ChunkPos(this.worldPosition), false).stream();
-        Packet<ClientGamePacketListener> updatePacket = this.getUpdatePacket();
-        entities.forEach(e -> {
-            if (updatePacket != null) {
-                e.connection.send(updatePacket);
-            }
-        });
-    }*/
-
-
     public void setFluid(FluidStack fluidStack) {
         this.fluidTankHandler.setFluid(fluidStack);
+    }
+
+    public boolean consumeWaterBottle() {
+        int consumption = ModConfigCommon.CONDENSER_BOTTLE_MB_CONSUMPTION.get();
+        if( consumption > fluidTankHandler.getFluidAmount()){
+            return false;
+        }
+        fluidTankHandler.drain(consumption,FluidAction.EXECUTE);
+        return true;
     }
 }

@@ -13,6 +13,7 @@ public class ModConfigCommon {
     public static final ForgeConfigSpec.ConfigValue<Integer> CONDENSER_MB_PER_CYCLE;
     public static final ForgeConfigSpec.ConfigValue<Float> CONDENSER_MB_MULTI_MIN;
     public static final ForgeConfigSpec.ConfigValue<Float> CONDENSER_MB_MULTI_MAX;
+    public static final ForgeConfigSpec.ConfigValue<Integer> CONDENSER_BOTTLE_MB_CONSUMPTION;
 
     static {
         BUILDER.push("Configs for WaterCondenser");
@@ -29,6 +30,9 @@ public class ModConfigCommon {
                 .define("Fluid multiplier chance min", 0.0f);
         CONDENSER_MB_MULTI_MAX = BUILDER.comment("For random variance, the maximum multiplier for each fill cycle")
                 .define("Fluid multiplier chance max", 1.0f);
+
+        CONDENSER_BOTTLE_MB_CONSUMPTION = BUILDER.comment("Bottle consumption per bottle, in mB")
+                .define("Fluid amount in mB", 250);
 
 
         BUILDER.pop();

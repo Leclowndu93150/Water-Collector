@@ -8,6 +8,9 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
@@ -18,14 +21,15 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.fluids.FluidUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import net.minecraft.world.item.alchemy.Potions;
 
 public class WatercondenserBlock extends BaseEntityBlock{
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
-
 
     public WatercondenserBlock(Properties properties) {
         super(properties);
@@ -59,18 +63,6 @@ public class WatercondenserBlock extends BaseEntityBlock{
     }
 
     @Override
-    public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pIsMoving) {
-        if (pState.getBlock() != pNewState.getBlock()) {
-            BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
-            if (blockEntity instanceof WatercondenserBlockEntity) {
-                //((WatercondenserBlockEntity) blockEntity).drops();
-            }
-        }
-        super.onRemove(pState, pLevel, pPos, pNewState, pIsMoving);
-    }
-
-
-    @Override
     public @NotNull InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos,
                                           Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         if (!pLevel.isClientSide()) {
@@ -82,6 +74,20 @@ public class WatercondenserBlock extends BaseEntityBlock{
                 if(success){
                     watercondenser.setChanged();
                 }
+
+                ItemStack held = pPlayer.getItemInHand(pHand);
+
+                if (!pLevel.isClientSide() && held.getItem() == Items.GLASS_BOTTLE){
+                    boolean waterConsumed = watercondenser.consumeWaterBottle();
+                    if(waterConsumed) {
+                        held.shrink(1);
+                        ItemStack waterPotion = PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.WATER);
+                        pPlayer.getInventory().placeItemBackInInventory(waterPotion);
+                        return InteractionResult.CONSUME;
+                    }
+                    return InteractionResult.FAIL;
+                }
+
             } else {
                 throw new IllegalStateException("Our Container provider is missing!");
             }
