@@ -59,10 +59,10 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
-            property 'forge.enabledGameTestNamespaces', 'watercondenser'
+            property 'forge.enabledGameTestNamespaces', 'watercollector'
 
             mods {
-                watercondenser {
+                watercollector {
                     source sourceSets.main
                 }
             }
@@ -79,7 +79,7 @@ minecraft {
             property 'forge.enabledGameTestNamespaces', 'watercollector'
 
             mods {
-                watercondenser {
+                watercollector {
                     source sourceSets.main
                 }
             }
@@ -107,7 +107,7 @@ minecraft {
             property 'forge.enabledGameTestNamespaces', 'watercollector'
 
             mods {
-                watercondenser {
+                watercollector {
                     source sourceSets.main
                 }
             }
@@ -124,7 +124,7 @@ minecraft {
             args '--mod', 'watercollector', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
 
             mods {
-                watercondenser {
+                watercollector {
                     source sourceSets.main
                 }
             }
