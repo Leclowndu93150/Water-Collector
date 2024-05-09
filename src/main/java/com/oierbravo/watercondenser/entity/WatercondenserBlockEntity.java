@@ -6,17 +6,14 @@ import com.oierbravo.watercondenser.network.packets.FluidStackSyncS2CPacket;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
@@ -31,10 +28,9 @@ import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
 
-import java.util.Objects;
 import java.util.Random;
 import java.util.random.RandomGenerator;
-import java.util.stream.Stream;
+
 /**
  *  Code adapted from https://github.com/EwyBoy/ITank/blob/1.18.2/src/main/java/com/ewyboy/itank/common/content/tank/TankTile.java
  *
@@ -138,6 +134,20 @@ public class WatercondenserBlockEntity extends BlockEntity {
 
         if(pLevel.isClientSide()) {
             return;
+        }
+
+        for(Direction direction : Direction.values()) {
+            BlockPos offsetPos = pPos.relative(direction);
+            BlockEntity blockEntity = pLevel.getBlockEntity(offsetPos);
+            if (blockEntity != null){
+                LazyOptional<IFluidHandler> FluidTank = blockEntity.getCapability(ForgeCapabilities.FLUID_HANDLER, direction.getOpposite());
+                FluidTank.ifPresent(tank -> {
+                    if(pBlockEntity.fluidTankHandler.getFluidAmount() >= ModConfigCommon.CONDENSER_MB_PER_CYCLE.get()){
+                        tank.fill(new FluidStack(Fluids.WATER,ModConfigCommon.CONDENSER_MB_PER_CYCLE.get()), FluidAction.EXECUTE);
+                        pBlockEntity.fluidTankHandler.drain(ModConfigCommon.CONDENSER_MB_PER_CYCLE.get(),FluidAction.EXECUTE);
+                    }
+                });
+            }
         }
 
         final long timeNow = pLevel.getDayTime();
