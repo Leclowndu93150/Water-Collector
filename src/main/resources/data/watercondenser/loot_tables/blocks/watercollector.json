@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "watercondenser:watercondenser"
+          "name": "watercollector:watercollector"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "watercondenser:blocks/watercondenser"
+  "random_sequence": "watercollector:blocks/watercollector"
 }

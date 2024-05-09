@@ -2,24 +2,24 @@ modLoader="javafml" #mandatory
 loaderVersion="[43,)" #mandatory This is typically bumped every Minecraft version by Forge. See our download page for lists of versions.
 license="MIT"
 [[mods]] #mandatory
-modId="watercondenser" #mandatory
+modId="watercollector" #mandatory
 version="${file.jarVersion}" #mandatory
-displayName="Watercondenser" #mandatory
+displayName="Watercollector" #mandatory
 logoFile="watercondenser.logo.png" #optional
 credits="ITank mod for render code." #optional
-authors="oierbravo" #optional
+authors="Leclowndu93150, thepigcat, oierbravo" #optional
 description='''
 Simple water generator block.
 '''
 
-[[dependencies.watercondenser]]
+[[dependencies.watercollector]]
 modId = "forge"
 mandatory = true
 versionRange="[47.0.0,)"
 ordering = "NONE"
 side = "BOTH"
 
-[[dependencies.watercondenser]]
+[[dependencies.watercollector]]
 modId = "minecraft"
 mandatory = true
 versionRange="[1.20,1.21)"
