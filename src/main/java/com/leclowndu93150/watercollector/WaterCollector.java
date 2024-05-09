@@ -1,22 +1,15 @@
-package com.oierbravo.watercondenser;
+package com.leclowndu93150.watercollector;
 
+import com.leclowndu93150.watercollector.config.ModConfigCommon;
+import com.leclowndu93150.watercollector.entity.ModBlockEntities;
+import com.leclowndu93150.watercollector.entity.WatercollectorBlockEntity;
+import com.leclowndu93150.watercollector.item.ModItems;
+import com.leclowndu93150.watercollector.network.ModMessages;
 import com.mojang.logging.LogUtils;
-import com.oierbravo.watercondenser.block.ModBlocks;
-import com.oierbravo.watercondenser.config.ModConfigCommon;
-import com.oierbravo.watercondenser.entity.ModBlockEntities;
-import com.oierbravo.watercondenser.entity.WatercondenserBlockEntity;
-import com.oierbravo.watercondenser.item.ModItems;
-import com.oierbravo.watercondenser.network.ModMessages;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.player.Player;
+import com.leclowndu93150.watercollector.block.ModBlocks;
 import net.minecraft.world.item.CreativeModeTabs;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.alchemy.Potion;
-import net.minecraft.world.item.alchemy.Potions;
-import net.minecraft.world.level.Level;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -26,15 +19,14 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
 
-import net.minecraft.world.item.alchemy.PotionUtils;
-@Mod(WaterCondenser.MODID)
-public class WaterCondenser
+@Mod(WaterCollector.MODID)
+public class WaterCollector
 {
-    public static final String MODID = "watercondenser";
+    public static final String MODID = "watercollector";
     // Directly reference a slf4j logger
     public static final Logger LOGGER = LogUtils.getLogger();
 
-    public WaterCondenser()
+    public WaterCollector()
     {
         IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
@@ -43,7 +35,7 @@ public class WaterCondenser
         ModBlockEntities.register(eventBus);
         ModMessages.register();
 
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ModConfigCommon.SPEC, "watercondenser-common.toml");
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ModConfigCommon.SPEC, "watercollector-common.toml");
 
         MinecraftForge.EVENT_BUS.register(this);
         eventBus.addListener(this::addCreative);
@@ -52,13 +44,13 @@ public class WaterCondenser
 
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
         if(event.getTabKey() == CreativeModeTabs.FUNCTIONAL_BLOCKS) {
-            event.accept(ModBlocks.WATERCONDENSER);
+            event.accept(ModBlocks.WATERCOLLECTOR);
         }
     }
 
     @SubscribeEvent
     public void onServerAboutToStart(final ServerAboutToStartEvent event) {
-        WatercondenserBlockEntity.verifyConfig(LOGGER);
+        WatercollectorBlockEntity.verifyConfig(LOGGER);
     }
     //@SubscribeEvent
     //public void onBottleClick(PlayerInteractEvent.RightClickItem e) {

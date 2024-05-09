@@ -1,7 +1,7 @@
-package com.oierbravo.watercondenser.network;
+package com.leclowndu93150.watercollector.network;
 
-import com.oierbravo.watercondenser.WaterCondenser;
-import com.oierbravo.watercondenser.network.packets.FluidStackSyncS2CPacket;
+import com.leclowndu93150.watercollector.WaterCollector;
+import com.leclowndu93150.watercollector.network.packets.FluidStackSyncS2CPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkDirection;
@@ -19,7 +19,7 @@ public class ModMessages {
 
     public static void register() {
         SimpleChannel net = NetworkRegistry.ChannelBuilder
-                .named(new ResourceLocation(WaterCondenser.MODID, "messages"))
+                .named(new ResourceLocation(WaterCollector.MODID, "messages"))
                 .networkProtocolVersion(() -> "1.0")
                 .clientAcceptedVersions(s -> true)
                 .serverAcceptedVersions(s -> true)

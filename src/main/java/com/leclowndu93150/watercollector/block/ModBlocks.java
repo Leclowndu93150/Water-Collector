@@ -1,11 +1,9 @@
-package com.oierbravo.watercondenser.block;
+package com.leclowndu93150.watercollector.block;
 
-import com.oierbravo.watercondenser.WaterCondenser;
-import com.oierbravo.watercondenser.block.custom.WatercondenserBlock;
-import com.oierbravo.watercondenser.item.ModItems;
-import net.minecraft.client.resources.model.Material;
+import com.leclowndu93150.watercollector.WaterCollector;
+import com.leclowndu93150.watercollector.block.custom.WatercollectorBlock;
+import com.leclowndu93150.watercollector.item.ModItems;
 import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -19,10 +17,10 @@ import java.util.function.Supplier;
 
 public class ModBlocks {
     public static final DeferredRegister<Block> BLOCKS =
-            DeferredRegister.create(ForgeRegistries.BLOCKS, WaterCondenser.MODID);
+            DeferredRegister.create(ForgeRegistries.BLOCKS, WaterCollector.MODID);
 
-    public static final RegistryObject<Block> WATERCONDENSER = registerBlock("watercondenser",
-            () -> new WatercondenserBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS)
+    public static final RegistryObject<Block> WATERCOLLECTOR = registerBlock("watercollector",
+            () -> new WatercollectorBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS)
         .strength(5f).requiresCorrectToolForDrops().noOcclusion()));
 
 

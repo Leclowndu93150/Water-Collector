@@ -1,8 +1,7 @@
-package com.oierbravo.watercondenser.block.custom;
+package com.leclowndu93150.watercollector.block.custom;
 
-import com.oierbravo.watercondenser.WaterCondenser;
-import com.oierbravo.watercondenser.entity.ModBlockEntities;
-import com.oierbravo.watercondenser.entity.WatercondenserBlockEntity;
+import com.leclowndu93150.watercollector.entity.ModBlockEntities;
+import com.leclowndu93150.watercollector.entity.WatercollectorBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
@@ -21,17 +20,16 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.fluids.FluidUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import net.minecraft.world.item.alchemy.Potions;
 
-public class WatercondenserBlock extends BaseEntityBlock{
+public class WatercollectorBlock extends BaseEntityBlock{
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 
-    public WatercondenserBlock(Properties properties) {
+    public WatercollectorBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(this.getStateDefinition().any().setValue(FACING, Direction.NORTH));
     }
@@ -67,18 +65,18 @@ public class WatercondenserBlock extends BaseEntityBlock{
                                           Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         if (!pLevel.isClientSide()) {
             BlockEntity entity = pLevel.getBlockEntity(pPos);
-            if(entity instanceof WatercondenserBlockEntity) {
-                WatercondenserBlockEntity watercondenser = (WatercondenserBlockEntity) entity;
+            if(entity instanceof WatercollectorBlockEntity) {
+                WatercollectorBlockEntity watercollector = (WatercollectorBlockEntity) entity;
 
-                boolean success = FluidUtil.interactWithFluidHandler(pPlayer,pHand,watercondenser.getFluidHandler());
+                boolean success = FluidUtil.interactWithFluidHandler(pPlayer,pHand,watercollector.getFluidHandler());
                 if(success){
-                    watercondenser.setChanged();
+                    watercollector.setChanged();
                 }
 
                 ItemStack held = pPlayer.getItemInHand(pHand);
 
                 if (!pLevel.isClientSide() && held.getItem() == Items.GLASS_BOTTLE){
-                    boolean waterConsumed = watercondenser.consumeWaterBottle();
+                    boolean waterConsumed = watercollector.consumeWaterBottle();
                     if(waterConsumed) {
                         held.shrink(1);
                         ItemStack waterPotion = PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.WATER);
@@ -99,14 +97,14 @@ public class WatercondenserBlock extends BaseEntityBlock{
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
-        return ModBlockEntities.WATERCONDENSER_ENTITY.get().create(pPos,pState);
+        return ModBlockEntities.WATERCOLLECTOR_ENTITY.get().create(pPos,pState);
     }
 
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
-        return createTickerHelper(pBlockEntityType, ModBlockEntities.WATERCONDENSER_ENTITY.get(),
-                WatercondenserBlockEntity::tick);
+        return createTickerHelper(pBlockEntityType, ModBlockEntities.WATERCOLLECTOR_ENTITY.get(),
+                WatercollectorBlockEntity::tick);
     }
 
 }

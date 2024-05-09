@@ -1,9 +1,9 @@
-package com.oierbravo.watercondenser.block.custom;
+package com.leclowndu93150.watercollector.block.custom;
 
+import com.leclowndu93150.watercollector.entity.ModBlockEntities;
+import com.leclowndu93150.watercollector.entity.WatercollectorBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.oierbravo.watercondenser.entity.ModBlockEntities;
-import com.oierbravo.watercondenser.entity.WatercondenserBlockEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -27,15 +27,15 @@ import org.joml.Matrix4f;
  *  Code adapted from https://github.com/EwyBoy/ITank/blob/1.18.2/src/main/java/com/ewyboy/itank/client/TankRenderer.java
  *
  */
-public class WatercondenserRenderer implements BlockEntityRenderer<WatercondenserBlockEntity> {
+public class WatercollectorRenderer implements BlockEntityRenderer<WatercollectorBlockEntity> {
 
-    public WatercondenserRenderer(BlockEntityRendererProvider.Context context) {
+    public WatercollectorRenderer(BlockEntityRendererProvider.Context context) {
     }
     public static void register() {
-        BlockEntityRenderers.register(ModBlockEntities.WATERCONDENSER_ENTITY.get(), WatercondenserRenderer::new);
+        BlockEntityRenderers.register(ModBlockEntities.WATERCOLLECTOR_ENTITY.get(), WatercollectorRenderer::new);
     }
     @Override
-    public void render(@NotNull WatercondenserBlockEntity pBlockEntity, float pPartialTick, @NotNull PoseStack pPoseStack, @NotNull MultiBufferSource pBufferSource, int pPackedLight, int pPackedOverlay) {
+    public void render(@NotNull WatercollectorBlockEntity pBlockEntity, float pPartialTick, @NotNull PoseStack pPoseStack, @NotNull MultiBufferSource pBufferSource, int pPackedLight, int pPackedOverlay) {
         FluidStack fluidStack = pBlockEntity.getFluidHandler().getFluidInTank(0);
         if (!fluidStack.isEmpty()) {
             int amount = fluidStack.getAmount();

@@ -1,6 +1,6 @@
-package com.oierbravo.watercondenser.network.packets;
+package com.leclowndu93150.watercollector.network.packets;
 
-import com.oierbravo.watercondenser.entity.WatercondenserBlockEntity;
+import com.leclowndu93150.watercollector.entity.WatercollectorBlockEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
@@ -31,7 +31,7 @@ public class FluidStackSyncS2CPacket {
     public boolean handle(Supplier<NetworkEvent.Context> supplier) {
         NetworkEvent.Context context = supplier.get();
         context.enqueueWork(() -> {
-            if(Minecraft.getInstance().level.getBlockEntity(pos) instanceof WatercondenserBlockEntity blockEntity) {
+            if(Minecraft.getInstance().level.getBlockEntity(pos) instanceof WatercollectorBlockEntity blockEntity) {
                 blockEntity.setFluid(this.fluidStack);
             }
         });
