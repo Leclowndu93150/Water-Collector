@@ -142,9 +142,11 @@ public class WatercollectorBlockEntity extends BlockEntity {
                 LazyOptional<IFluidHandler> FluidTank = blockEntity.getCapability(ForgeCapabilities.FLUID_HANDLER, direction.getOpposite());
                 FluidTank.ifPresent(tank -> {
                     if (tank.getTankCapacity(0) != tank.getFluidInTank(0).getAmount()){
-                        if(pBlockEntity.fluidTankHandler.getFluidAmount() >= ModConfigCommon.COLLECTOR_MB_PER_CYCLE.get()){
-                            tank.fill(new FluidStack(Fluids.WATER,ModConfigCommon.COLLECTOR_MB_PER_CYCLE.get()), FluidAction.EXECUTE);
-                            pBlockEntity.fluidTankHandler.drain(ModConfigCommon.COLLECTOR_MB_PER_CYCLE.get(),FluidAction.EXECUTE);
+                        if(pBlockEntity.fluidTankHandler.getFluidAmount() >= ModConfigCommon.COLLECTOR_MB_PER_CYCLE.get() && tank.isFluidValid(0,new FluidStack(Fluids.WATER,ModConfigCommon.COLLECTOR_MB_PER_CYCLE.get()))){
+                            if(tank.getFluidInTank(0).equals(new FluidStack(Fluids.WATER, 1)) || tank.getFluidInTank(0).isEmpty()){
+                                tank.fill(new FluidStack(Fluids.WATER,ModConfigCommon.COLLECTOR_MB_PER_CYCLE.get()), FluidAction.EXECUTE);
+                                pBlockEntity.fluidTankHandler.drain(ModConfigCommon.COLLECTOR_MB_PER_CYCLE.get(),FluidAction.EXECUTE);
+                            }
                         }
                     }
                 });
